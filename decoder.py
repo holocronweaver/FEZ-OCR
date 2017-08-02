@@ -4,39 +4,39 @@ import detector
 import sys
 import os
 
-# Load training data and response
-samples = np.loadtxt('training.data', np.float32)
-responses = np.loadtxt('responses.data', np.float32)
-
-# Train our model
-model = cv2.KNearest()
-model.train(samples, responses)
-
-# Check if passed arguments are correct
-if len(sys.argv) < 2 and os.path.exists(sys.argv[1]) and sys.argv[2].isdigit():
+# Check if passed arguments are correct.
+if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]) or not sys.argv[2].isdigit():
     print "Usage: classifer.py <filename> <size>"
     sys.exit(0)
 
-# Load image and find all the glyphs
+# Load training data and response.
+samples = np.loadtxt('training.data', np.float32)
+responses = np.loadtxt('responses.data', np.float32)
+
+# Train our model.
+model = cv2.ml.KNearest_create()
+model.train(samples, cv2.ml.ROW_SAMPLE, responses)
+
+# Load image and find all the glyphs.
 sample_im = cv2.imread(sys.argv[1])
 size = int(sys.argv[2])
 boxes, thresh = detector.find_boxes(sample_im, size)
 
 letters = []
 for x1, y1, x2, y2 in boxes:
-    # Cut off glyph, resize and analyse with our model
+    # Cut off glyph, resize and analyse with our model.
     piece = cv2.resize(thresh[y1:y2, x1:x2], (10, 10)).reshape((1, 100))
     result, _, _, dist = model.find_nearest(np.float32(piece), k=1)
 
-    # Get rid of bad guesses
+    # Get rid of bad guesses.
     if dist[0][0] > 1E6:
         continue
 
-    # get the character and position
+    # Get the character and position.
     char = chr(int(result))
     center = ((x1 + x2) / 2 - 7, (y1 + y2) / 2 + 5)
 
-    # Draw letter on the image
+    # Draw letter on the image.
     cv2.putText(sample_im, char, center, 0, 0.7, (255, 255, 255), 5)
     cv2.putText(sample_im, char, center, 0, 0.7, (0, 128, 0), 2)
 
