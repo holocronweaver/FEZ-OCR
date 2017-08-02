@@ -20,7 +20,7 @@ def join_rect(rect1, rect2):
 
 # Finds all the glyphs.
 def find_boxes(im, size):
-    # Does some preprocessing
+    # Does some preprocessing.
     gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)    
     thresh = cv2.adaptiveThreshold(gray, 255, 1, 0, 127, 0)
     contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)

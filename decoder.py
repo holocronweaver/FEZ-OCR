@@ -5,8 +5,10 @@ import sys
 import os
 
 # Check if passed arguments are correct.
-if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]) or not sys.argv[2].isdigit():
-    print "Usage: classifer.py <filename> <size>"
+print(sys.argv)
+if len(sys.argv) != 3 \
+   or not os.path.exists(sys.argv[1]) or not sys.argv[2].isdigit():
+    print("Usage: classifer.py <filename> <size>")
     sys.exit(0)
 
 # Load training data and response.
@@ -56,7 +58,7 @@ for l, c in letters:
     prev = c
 
 # Print sentence and display image
-print sentence
+print(sentence)
 cv2.imshow('Decoded', sample_im)
 cv2.waitKey()
 cv2.destroyWindow('Decoded')
