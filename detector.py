@@ -23,9 +23,9 @@ def find_boxes(im, size):
     # Does some preprocessing.
     gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)    
     thresh = cv2.adaptiveThreshold(gray, 255, 1, 0, 127, 0)
-    contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     thresh2 = cv2.adaptiveThreshold(gray, 255, 1, 1, 127, 0)
-    contours2, _ = cv2.findContours(thresh2.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    _, contours2, _ = cv2.findContours(thresh2.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     # Checks if image needs to be inverted.
     if len(contours2) > len(contours):

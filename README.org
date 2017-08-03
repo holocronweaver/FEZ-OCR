@@ -1,4 +1,15 @@
+* goal
+Add an overlay to FEZ which autotranslates Zu runes.
+
+Include alphabet, numbers, and any other systems.
 * data
 Where did the training and response data come from?
 * model
-Why
+Why is the background so distracting? What can be done about it?
+
+Why the particular gylph detection?
+Why k-nearest neighbors?
+* usage
+** hijack FEZ OpenGL context
+** capture window framebuffer
+** add toggleable overlay
